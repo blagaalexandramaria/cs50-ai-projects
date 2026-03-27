@@ -44,7 +44,7 @@ The GUI provides a visual representation of the search:
 - 🔵 **Light Blue** → Explored nodes (BFS traversal)  
 - 🟡 **Gold** → Final shortest path  
 
-![Maze Solver](maze/screenshot.png)
+![Maze Solver](screenshot.png)
 
 ---
 
@@ -95,12 +95,12 @@ python gui.py
 ## 📁 Project Structure
 
 ```bash
-cs50-ai/
-└── lecture0_search/
-    ├── maze/
-    │   ├── maze.py        # BFS logic
-    │   ├── gui.py         # Tkinter visualization
-    │   └── maze.txt       # Input maze
+maze/
+├── maze.py          # BFS logic (maze solver)
+├── gui.py           # Tkinter GUI visualization
+├── maze.txt         # Input maze
+├── screenshot.png   # GUI preview
+└── README.md        # Project documentation 
 ```
 ---
 
