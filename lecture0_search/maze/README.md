@@ -123,6 +123,6 @@ maze/
 
 ---
 
-## 🧑‍💻 Author
+## 👩🏻‍💻 Author
 
 Developed as part of learning Artificial Intelligence fundamentals and search algorithms.
