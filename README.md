@@ -69,6 +69,6 @@ This repository will be expanded with:
 
 ---
 
-## 🧑‍💻 Author
+## 👩🏻‍💻 Author
 
 Developed as part of my journey in learning **Artificial Intelligence and Data Science**.
