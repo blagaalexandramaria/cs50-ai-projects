@@ -27,16 +27,16 @@ The project provides a **step-by-step visualization** of the search process, all
 ## 🚀 Algorithms
 
 🔵 **Breadth-First Search (BFS)**
-	- Explores nodes level by level
-	- Uses a queue (FIFO)
-	- Guarantees the shortest path
-	- More memory-intensive
+- Explores nodes level by level
+- Uses a queue (FIFO)
+- Guarantees the shortest path
+- More memory-intensive
 
 🟣 **Depth-First Search (DFS)**
-	- Explores as deep as possible first
-	- Uses a stack (LIFO)
-	- Does not guarantee shortest path
-	- Can be faster in some cases but less reliable
+- Explores as deep as possible first
+- Uses a stack (LIFO)
+- Does not guarantee shortest path
+- Can be faster in some cases but less reliable
 
 ---
 

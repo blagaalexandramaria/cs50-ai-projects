@@ -1,4 +1,5 @@
 from collections import deque
+import heapq
 import os
 
 
@@ -50,6 +51,12 @@ class Maze:
                     valid_neighbors.append((x, y))
 
         return valid_neighbors
+    
+    def heuristic(self, state):
+        # Manhattan distance between current state and goal
+        x1, y1 = state
+        x2, y2 = self.goal
+        return abs(x1 - x2) + abs(y1 - y2)
 
 # ================= BFS =================
     def solve_with_exploration_bfs(self):
@@ -112,6 +119,49 @@ class Maze:
             
         # If no solution found
         return None, explored_order
+    
+# ================= GREEDY BEST-FIRST SEARCH =================
+    def solve_with_exploration_greedy(self):
+        # Priority queue (min-heap)
+        # Each elememnt = (priority, current_state, path_so_far)
+        frontier = []
+        # Push the start node with its heuristic value
+        heapq.heappush(
+            frontier,
+            (self.heuristic(self.start), self.start, [self.start])
+        )
+
+        visited = set() # Set of visited nodes
+        explored_order = [] # list to store the order of explored nodes
+
+        while frontier:
+            # Pop node with the smallest heuristic value
+            _, current_state, path = heapq.heappop(frontier)
+
+            # Skip if already visited
+            if current_state in visited:
+                continue
+            visited.add(current_state) # Mark as visited
+            explored_order.append(current_state) # Store exploration order
+
+            # Check if goal reached
+            if current_state == self.goal:
+                return path, explored_order
+        
+            # Explore neighbors
+            for neighbor in self.neighbors(current_state):
+                if neighbor not in visited:
+                    # Compute heuristic valuefor the neighbor
+                    priority = self.heuristic(neighbor)
+            
+                # Add neighbor to the priority queue
+                heapq.heappush(
+                    frontier,
+                    (priority, neighbor, path + [neighbor])
+                )
+
+        #If no solution found
+        return None, explored_order
 
 # ================= SIMPLE SOLVERS =================
     def solve_bfs(self):
@@ -122,6 +172,11 @@ class Maze:
     def solve_dfs(self):
         # DFS solution
         path, _ = self.solve_with_exploration_dfs()
+        return path
+    
+    def solve_greedy(self):
+        # Greedy Best-First Search solution
+        path, _ = self.solve_with_exploration_greedy()
         return path
 
 
@@ -137,3 +192,6 @@ if __name__ == "__main__":
 
     print("\nDFS solution:")
     print(maze.solve_dfs())
+
+    print("\nGreedy solution:")
+    print(maze.solve_greedy())

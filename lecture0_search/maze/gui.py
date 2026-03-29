@@ -22,7 +22,7 @@ class MazeGUI:
         # Prevent multiple animations at once
         self.is_animating = False
 
-        self.root.title("Maze Solver - BFS / DFS")
+        self.root.title("Maze Solver - BFS / DFS / Greedy")
 
         rows = len(self.maze.grid)
         cols = len(self.maze.grid[0])
@@ -56,6 +56,14 @@ class MazeGUI:
         )
         self.dfs_button.pack(side=tk.LEFT, padx=5)
 
+        # Greedy button
+        self.greedy_button = tk.Button(
+            button_frame,
+            text="Solve with Greedy",
+            command=self.start_greedy_animation
+        )
+        self.greedy_button.pack(side=tk.LEFT, padx=5)
+
         # Reset button
         self.reset_button = tk.Button(
             button_frame,
@@ -64,7 +72,7 @@ class MazeGUI:
         )
         self.reset_button.pack(side=tk.LEFT, padx=5)
 
-        # Info label (path length and explored states)
+        # Info label 
         self.info_label = tk.Label(
             root,
             text="Algorithm: - | Path length: - | Explored states:",
@@ -151,6 +159,10 @@ class MazeGUI:
     def start_dfs_animation(self):
         # Start DFS animation
         self.start_animation("DFS")
+    
+    def start_greedy_animation(self):
+        # Start Greedy Best-First Search animation
+        self.start_animation("Greedy")
 
     def start_animation(self, algorithm):
         # Prevent multiple animations running simultaneously
@@ -165,6 +177,8 @@ class MazeGUI:
             self.solution, self.explored = self.maze.solve_with_exploration_bfs()
         elif algorithm == "DFS":
             self.solution, self.explored = self.maze.solve_with_exploration_dfs()
+        elif algorithm == "Greedy":
+            self.solution, self.explored = self.maze.solve_with_exploration_greedy()
         else:
             return
         
