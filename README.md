@@ -19,41 +19,63 @@ The goal of this repository is to:
 
 ### 🔍 Lecture 0 - Search
 
-- **Maze Solver (BFS)**
-  - Finds the shortest path in a grid-based maze
-  - Includes GUI visualization with animation
-  - Demonstrates Breadth-First Search step by step
+#### 🧩 Maze Solver (BFS, DFS, Greedy, A*)
+- Finds a path in a grid-based maze
+- Implements both:
+  - **Uninformed search** → BFS, DFS  
+  - **Informed search** → Greedy Best-First, A*  
+- Includes **GUI visualization with animation**
+- Shows step-by-step exploration of the search space
+
+---
+
+#### 🎮 Tic Tac Toe AI (Minimax)
+- Implements an **AI agent** that plays optimally using the **Minimax algorithm**
+- Demonstrates **adversarial search**
+- Includes **Tkinter GUI** for real-time interaction
+- AI is unbeatable (optimal play)
 
 ---
 
 ## 📁 Project Structure
-
-```
+```bash
 cs50-ai/
 │
 ├── lecture0_search/
-│   └── maze/
-│       ├── maze.py
+│   ├── maze/
+│   │   ├── maze.py
+│   │   ├── gui.py
+│   │   ├── maze.txt
+│   │   └── README.md
+│   │
+│   └── tic_tac_toe/
+│       ├── tictactoe.py
 │       ├── gui.py
-│       ├── maze.txt
 │       └── README.md
-``` 
+```
 ---
 
 ## 🚀 Technologies Used
 
 - Python
 - Tkinter (GUI)
-- Graph search algorithms (BFS)
+- Search algorithms:
+  - BFS, DFS
+  - Greedy Best-First Search
+  - A* Search
+  - Minimax (Adversarial Search)
 
 ---
 
 ## 💡 Key Concepts Covered
 
 - State-space search
-- Breadth-First Search (BFS)
-- Graph traversal
+- Uninformed vs informed search
+- Heuristic functions
 - Pathfinding algorithms
+- Adversarial search (game theory)
+- Game trees
+- Minimax algorithm
 - Visualization of AI processes
 
 ---
@@ -61,7 +83,7 @@ cs50-ai/
 ## 🔥 Future Work
 
 This repository will be expanded with:
-- DFS and A* search
+- Alpha-Beta Pruning (Minimax optimization)
 - Knowledge representation
 - Constraint satisfaction problems
 - Machine learning basics
