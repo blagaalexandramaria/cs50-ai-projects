@@ -64,6 +64,14 @@ class MazeGUI:
         )
         self.greedy_button.pack(side=tk.LEFT, padx=5)
 
+        # A* button
+        self.astar_button = tk.Button(
+            button_frame,
+            text = "Solve with A*",
+            command=self.start_astar_animation
+        )
+        self.astar_button.pack(side=tk.LEFT, padx=5)
+
         # Reset button
         self.reset_button = tk.Button(
             button_frame,
@@ -163,6 +171,10 @@ class MazeGUI:
     def start_greedy_animation(self):
         # Start Greedy Best-First Search animation
         self.start_animation("Greedy")
+    
+    def start_astar_animation(self):
+        # Start A* animation
+        self.start_animation("A*")
 
     def start_animation(self, algorithm):
         # Prevent multiple animations running simultaneously
@@ -179,6 +191,8 @@ class MazeGUI:
             self.solution, self.explored = self.maze.solve_with_exploration_dfs()
         elif algorithm == "Greedy":
             self.solution, self.explored = self.maze.solve_with_exploration_greedy()
+        elif algorithm == "A*":
+            self.solution, self.explored = self.maze.solve_with_exploration_astar()
         else:
             return
         

@@ -162,6 +162,56 @@ class Maze:
 
         #If no solution found
         return None, explored_order
+    
+    # ================= A* SEARCH =================
+    def solve_with_exploration_astar(self):
+        # Priority queue (min-heap)
+        # Each element = (f_cost, g_cost, current_state, path_so_far)
+        frontier = []
+        start_g = 0 # Initial path cost is 0
+        start_f = start_g + self.heuristic(self.start)
+
+        # Push the start noded
+        heapq.heappush(
+            frontier,
+            (start_f, start_g, self.start, [self.start])
+        )
+        # Dictionary to store the best known cost to each state
+        best_g = {self.start: 0}
+        explored_order = [] # list to store order of explored nodes
+
+        while frontier:
+            # Pop node with the smallest f(n) = g(n) + h(n)
+            f_cost, g_cost, current_state, path = heapq.heappop(frontier)
+
+            # Skip outdated entries
+            if g_cost > best_g.get(current_state, float("inf")):
+                continue
+            
+            # Store exploration order
+            explored_order.append(current_state)
+
+            # Check if goal reached
+            if current_state == self.goal:
+                return path, explored_order
+            
+            # Explore neighbors
+            for neighbor in self.neighbors(current_state):
+                new_g = g_cost + 1 # Each move has cost 1
+
+                # Only update if this path is better
+                if new_g < best_g.get(neighbor, float("inf")):
+                    best_g[neighbor] = new_g
+                    new_f = new_g + self.heuristic(neighbor)
+
+                    heapq.heappush(
+                        frontier,
+                        (new_f, new_g, neighbor, path + [neighbor])
+                    )
+            
+            # If solution not found
+        return None, explored_order
+
 
 # ================= SIMPLE SOLVERS =================
     def solve_bfs(self):
@@ -177,6 +227,11 @@ class Maze:
     def solve_greedy(self):
         # Greedy Best-First Search solution
         path, _ = self.solve_with_exploration_greedy()
+        return path
+    
+    def solve_astar(self):
+        # A* solution
+        path, _ = self.solve_with_exploration_astar()
         return path
 
 
@@ -195,3 +250,6 @@ if __name__ == "__main__":
 
     print("\nGreedy solution:")
     print(maze.solve_greedy())
+
+    print("\nA* solution:")
+    print(maze.solve_astar())
