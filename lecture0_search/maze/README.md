@@ -1,14 +1,16 @@
-# 🧠 Maze Solver with BFS (AI Search Visualization)
+# 🧠 Maze Solver with BFS & DFS (AI Search Visualization)
 
-This project implements a **Breadth-First Search (BFS)** algorithm to solve a maze and visually demonstrates how the search process works step by step.
+This project implements **Breadth-First Search (BFS)** and **Depth-First Search (DFS)** algorithms to solve a maze and visually demonstrates how the search process works step by step.
 
 ---
 
 ## 📌 Overview
 
-The goal is to find the shortest path from a **start position (S)** to a **goal position (G)** in a grid-based maze while avoiding obstacles.
+The goal is to find a path from a **start position (S)** to a **goal position (G)** in a grid-based maze while avoiding obstacles.
 
-Unlike a simple solver, this project also **visualizes the exploration process**, making it easier to understand how BFS works internally.
+BFS guarantees the shortest path, while DFS may return a longer path depending on exploration order.
+
+The project provides a **step-by-step visualization** of the search process, allowing you to clearly see the difference between BFS and DFS.
 
 ---
 
@@ -22,14 +24,19 @@ Unlike a simple solver, this project also **visualizes the exploration process**
 
 ---
 
-## 🚀 Algorithm
+## 🚀 Algorithms
 
-The project uses **Breadth-First Search (BFS)**:
+🔵 **Breadth-First Search (BFS)**
+	- Explores nodes level by level
+	- Uses a queue (FIFO)
+	- Guarantees the shortest path
+	- More memory-intensive
 
-- Explores nodes **level by level**
-- Guarantees the **shortest path**
-- Uses a **queue (FIFO)** structure
-- Tracks visited states to avoid cycles
+🟣 **Depth-First Search (DFS)**
+	- Explores as deep as possible first
+	- Uses a stack (LIFO)
+	- Does not guarantee shortest path
+	- Can be faster in some cases but less reliable
 
 ---
 
@@ -41,26 +48,35 @@ The GUI provides a visual representation of the search:
 - 🟥 **Red** → Goal node  
 - ⬛ **Black** → Walls  
 - ⬜ **White** → Free space  
-- 🔵 **Light Blue** → Explored nodes (BFS traversal)  
+- 🔵 **Light Blue** → Explored nodes (BFS / DFS traversal)  
 - 🟡 **Gold** → Final shortest path  
 
-![Maze Solver](screenshot.png)
+### 🔵 BFS
+![BFS Visualization](screenshot.png)
+
+### 🟣 DFS
+![DFS Visualization](dfs.png)
 
 ---
 
 ## 🎬 How it works
 
-1. The maze is loaded from a `.txt` file  
-2. BFS explores the grid step by step  
-3. Each explored state is animated in real time  
-4. Once the goal is reached:
-   - The shortest path is highlighted  
-   - Statistics are displayed  
+1.	The maze is loaded from a `.txt` file
+2.	You choose:
+	- Solve with BFS
+	- Solve with DFS
+3.	The algorithm explores the maze step by step
+4.	The process is animated in real time
+5.	When the goal is reached:
+	- The path is highlighted
+	- Statistics are displayed
+ 
 
 ---
 
 ## 📊 Output Information
 
+- **Algorithm used (BFS / DFS)**
 - **Path length**
 - **Number of explored states**
 
@@ -96,11 +112,12 @@ python gui.py
 
 ```bash
 maze/
-├── maze.py          # BFS logic (maze solver)
+├── maze.py          # BFS & DFS logic
 ├── gui.py           # Tkinter GUI visualization
 ├── maze.txt         # Input maze
-├── screenshot.png   # GUI preview
-└── README.md        # Project documentation 
+├── screenshot.png   # BFS GUI preview
+├── dfs.png          # DFS GUI preview
+└── README.md        # Project documentation
 ```
 ---
 
@@ -108,7 +125,7 @@ maze/
 
 - Graph traversal
 - State-space search
-- BFS vs DFS
+- BFS vs DFS comparison
 - Path reconstruction
 - Visualization of AI algorithms
 
@@ -116,10 +133,11 @@ maze/
 
 ## 🔥 Future Improvements
 
-- Add DFS / A* comparison
+- Add A* and Greedy Search
 - Allow custom maze input
 - Generate random mazes
 - Adjustable animation speed
+- Different colors for BFS and DFS exploration
 
 ---
 

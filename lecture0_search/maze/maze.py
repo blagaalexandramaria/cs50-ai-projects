@@ -51,29 +51,20 @@ class Maze:
 
         return valid_neighbors
 
-    def solve_with_exploration(self):
+# ================= BFS =================
+    def solve_with_exploration_bfs(self):
         # Queue for BFS (FIFO)
         queue = deque()
-
-        # Each element = (current_state, path_so_far)
+        # Add the start state to the queue
         queue.append((self.start, [self.start]))
-
-        # Set of visited nodes
-        visited = set()
-
+        # Mark the start state as visited immediately
+        visited = {self.start}
         # List to store order of explored nodes (for visualization)
         explored_order = []
 
         while queue:
             # Get first element from queue
             current_state, path = queue.popleft()
-
-            # Skip if already visited
-            if current_state in visited:
-                continue
-
-            # Mark as visited
-            visited.add(current_state)
 
             # Store exploration order
             explored_order.append(current_state)
@@ -84,15 +75,53 @@ class Maze:
 
             # Explore neighbors
             for neighbor in self.neighbors(current_state):
-                if neighbor not in visited:
+                if neighbor not in visited: # Add only nodes that were never seen before
+                    visited.add(neighbor)
                     queue.append((neighbor, path + [neighbor]))
+                
+        # If no solution found
+        return None, explored_order
+    
+# ================= DFS =================
+    def solve_with_exploration_dfs(self):
+        # Stack for DFS (LIFO)
+        stack = []
+        # Add start state
+        stack.append((self.start,[self.start]))
+        # Mark start as visited immediately
+        visited = {self.start}
+        # List to store order of explored nodes
+        explored_order = []
 
+        while stack:
+            # Get last element (LIFO)
+            current_state, path = stack.pop()
+            # Store exploration order
+            explored_order.append(current_state)
+            
+            # Check if goal reached
+            if current_state == self.goal:
+                return path, explored_order
+            
+            # Explore neighbors
+            for neighbor in self.neighbors(current_state):
+                # Add only if not already discovered
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    stack.append(( neighbor, path + [neighbor]))
+            
         # If no solution found
         return None, explored_order
 
-    def solve(self):
-        # Return only the path (used for simple version)
-        path, _ = self.solve_with_exploration()
+# ================= SIMPLE SOLVERS =================
+    def solve_bfs(self):
+        # BFS solution 
+        path, _ = self.solve_with_exploration_bfs()
+        return path
+    
+    def solve_dfs(self):
+        # DFS solution
+        path, _ = self.solve_with_exploration_dfs()
         return path
 
 
@@ -102,7 +131,9 @@ if __name__ == "__main__":
     file_path = os.path.join(base_path, "maze.txt")
 
     maze = Maze(file_path)
-    solution = maze.solve()
+    
+    print("BFS solution:")
+    print(maze.solve_bfs())
 
-    print("The path found is:")
-    print(solution)
+    print("\nDFS solution:")
+    print(maze.solve_dfs())

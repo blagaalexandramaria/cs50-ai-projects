@@ -22,7 +22,7 @@ class MazeGUI:
         # Prevent multiple animations at once
         self.is_animating = False
 
-        self.root.title("Maze Solver - BFS")
+        self.root.title("Maze Solver - BFS / DFS")
 
         rows = len(self.maze.grid)
         cols = len(self.maze.grid[0])
@@ -40,13 +40,21 @@ class MazeGUI:
         button_frame = tk.Frame(root)
         button_frame.pack(pady=10)
 
-        # Solve button
-        self.solve_button = tk.Button(
+        # BFS button
+        self.bfs_button = tk.Button(
             button_frame,
-            text="Solve",
-            command=self.start_animation
+            text="Solve with BFS",
+            command=self.start_bfs_animation
         )
-        self.solve_button.pack(side=tk.LEFT, padx=5)
+        self.bfs_button.pack(side=tk.LEFT, padx=5)
+
+        # DFS button
+        self.dfs_button = tk.Button(
+            button_frame,
+            text="Solve with DFS",
+            command=self.start_dfs_animation
+        )
+        self.dfs_button.pack(side=tk.LEFT, padx=5)
 
         # Reset button
         self.reset_button = tk.Button(
@@ -59,7 +67,7 @@ class MazeGUI:
         # Info label (path length and explored states)
         self.info_label = tk.Label(
             root,
-            text="Path length: - | Explored states: -",
+            text="Algorithm: - | Path length: - | Explored states:",
             font=("Arial", 12)
         )
         self.info_label.pack(pady=5)
@@ -136,20 +144,35 @@ class MazeGUI:
                     fill="gold",
                     outline="light gray"
                 )
+    def start_bfs_animation(self):
+        # Start BFS animation
+        self.start_animation("BFS")
+    
+    def start_dfs_animation(self):
+        # Start DFS animation
+        self.start_animation("DFS")
 
-    def start_animation(self):
+    def start_animation(self, algorithm):
         # Prevent multiple animations running simultaneously
         if self.is_animating:
             return
 
-        # Run BFS and get both solution and explored nodes
-        self.solution, self.explored = self.maze.solve_with_exploration()
+        # Store selected algorithm
+        self.current_algorithm = algorithm
 
+        # Run the selected algorithm
+        if algorithm == "BFS":
+            self.solution, self.explored = self.maze.solve_with_exploration_bfs()
+        elif algorithm == "DFS":
+            self.solution, self.explored = self.maze.solve_with_exploration_dfs()
+        else:
+            return
+        
+        # Reset animation state
         self.animation_index = 0
         self.is_animating = True
-
+        # Redraw maze before starting animation
         self.draw_maze()
-
         # Start animation loop
         self.animate_step()
 
@@ -180,7 +203,7 @@ class MazeGUI:
         explored_count = len(self.explored)
 
         self.info_label.config(
-            text=f"Path length: {path_length} | Explored states: {explored_count}"
+            text=f"Algorithm: {self.current_algorithm} | Path length: {path_length} | Explored states: {explored_count}"
         )
 
     def reset_maze(self):
@@ -194,7 +217,7 @@ class MazeGUI:
         self.draw_maze()
 
         self.info_label.config(
-            text="Path length: - | Explored states: -"
+            text="Algorithm: - | Path length: - | Explored states: -"
         )
 
 
