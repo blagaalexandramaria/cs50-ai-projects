@@ -118,6 +118,9 @@ def minimax(board):
         return None
     
     current_player = player(board)
+    # Initial alpha, beta values
+    alpha = float("-inf")
+    beta = float("inf")
     
     # Max player (X)
     if current_player == X:
@@ -127,12 +130,15 @@ def minimax(board):
         # Explore all possible actions
         for action in actions(board):
             # Simulate move and evaluate opponent response
-            value = min_value(result(board, action))
+            value = min_value(result(board, action), alpha, beta)
             
             # Choose action with maximum value
             if value > best_value:
                 best_value = value
                 best_action = action
+            
+            # Update alpha with best value found so far
+            alpha = max(alpha, best_value)
         
         return best_action
 
@@ -144,16 +150,19 @@ def minimax(board):
         # Explore all possible actions
         for action in actions(board):
             # Simulate move and evaluate opponent response
-            value = max_value(result(board, action))
+            value = max_value(result(board, action), alpha, beta)
 
             # Choose action with minimum value
             if value < best_value:
                 best_value = value
                 best_action = action
+            
+            # Update beta with best value found so far
+            beta = min(beta, best_value)
         
         return best_action
 
-def max_value(board):
+def max_value(board, alpha, beta):
     # Compute the maximum utility achievable from this state
 
     # Base case: terminal state
@@ -165,11 +174,18 @@ def max_value(board):
     # Try all possible actions
     for action in actions(board):
         # Assume opponent plays optimal (minimizes)
-        v = max(v, min_value(result(board, action)))
+        v = max(v, min_value(result(board, action), alpha, beta))
     
+        # Update alpha
+        alpha = max(alpha, v)
+
+        # Prune branch if current state is alerady too good for MAX
+        # and MIN would never allow reaching a worse alternative
+        if alpha >= beta:
+            break
     return v
 
-def min_value(board):
+def min_value(board, alpha, beta):
    # compute the minium utility achievable from this state
 
    # Base state: terminal case
@@ -181,7 +197,15 @@ def min_value(board):
     # Try all possible cases
     for action in actions(board):
         # Assume opponent plays optimally
-        v = min(v, max_value(result(board, action)))
+        v = min(v, max_value(result(board, action), alpha, beta))
+        
+        # Update beta
+        beta = min(beta, v)
+        
+        # Prune branch if current state is already too bad for MIN
+        # and MAX would never allow reaching a better alternative
+        if alpha >= beta:
+            break
 
     return v
 

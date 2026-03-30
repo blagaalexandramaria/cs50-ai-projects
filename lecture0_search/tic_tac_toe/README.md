@@ -1,6 +1,6 @@
-# 🎮 Tic Tac Toe AI with Minimax (Adversarial Search Visualization)
+# 🎮 Tic Tac Toe AI with Minimax & Alpha-Beta Pruning (Adversarial Search Visualization)
 
-This project implements an **Artificial Intelligence agent** that plays Tic Tac Toe optimally using the **Minimax algorithm**, a fundamental concept in adversarial search.
+This project implements an **Artificial Intelligence agent** that plays Tic Tac Toe optimally using the **Minimax algorithm with Alpha-Beta Pruning**, a fundamental concept in adversarial search.
 
 It also includes a **graphical interface (Tkinter GUI)** that allows interaction with the AI in real time.
 
@@ -12,6 +12,7 @@ The goal is to create an AI that can play Tic Tac Toe **perfectly**, assuming th
 
 The AI uses:
 - Full game-tree exploration
+- Alpha-Beta Pruning optimization
 - Recursive decision-making
 - Optimal strategy selection
 
@@ -24,8 +25,8 @@ The AI uses:
 The game is modeled as a **state-space search problem**:
 
 - **State**: current configuration of the 3×3 board  
-- **Players(s)**: determines whose turn it is (X or O)  
-- **Actions(s)**: all valid moves (empty cells)  
+- **Players**: determines whose turn it is (X or O)  
+- **Actions**: all valid moves (empty cells)  
 - **Result(s, a)**: new board after applying action `a`  
 - **Terminal(s)**: checks if the game is finished  
 - **Utility(s)**:
@@ -50,6 +51,16 @@ The algorithm works recursively:
   - Explore all possible actions
   - Simulate opponent's best response
   - Propagate values back up the tree
+
+### 🟣 Alpha-Beta Pruning
+
+To improve efficiency, the Minimax algorithm is optimized using **Alpha-Beta Pruning**.
+
+This technique avoids exploring branches of the game tree that cannot influence the final decision.
+
+- Reduces the number of states explored  
+- Maintains the same optimal result  
+- Improves performance without changing gameplay behavior  
 
 ---
 
@@ -137,7 +148,7 @@ python gui.py
 ## 📁 Project Structure
 ```bash
 tic_tac_toe/
-├── tictactoe.py     # Game logic + Minimax algorithm
+├── tictactoe.py     # Game logic + Minimax + Alpha-Beta Pruning
 ├── gui.py           # Tkinter GUI interface
 └── README.md        # Project documentation
 ```
@@ -151,9 +162,9 @@ tic_tac_toe/
 - Recursion
 - State-space exploration
 - Optimal decision-making
+- Alpha-Beta Pruning
 
 ## 🚀 Possible Improvements
-- Alpha-Beta Pruning (performance optimization)
 - Difficulty levels (depth-limited minimax)
 - Better UI (colors, animations)
 - AI vs AI mode
