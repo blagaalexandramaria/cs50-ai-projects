@@ -29,7 +29,7 @@ The goal of this repository is to:
 
 ---
 
-#### 🎮 Tic Tac Toe AI (Minimax)
+#### 🎮 Tic Tac Toe AI with Minimax & Alpha-Beta Pruning
 - Implements an **AI agent** that plays optimally using the **Minimax algorithm**
 - Demonstrates **adversarial search**
 - Includes **Tkinter GUI** for real-time interaction
